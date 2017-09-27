@@ -189,7 +189,7 @@ function lagCheck!(s::ModelState, t::Integer)
     oldMax = s.runtimeData.maxTech;
     newMax = maximum(n.A for n in s.nodeList);
     if newMax > oldMax
-        print_with_color(32, "New tech max attained at time $(t)\n")
+        # print_with_color(32, "New tech max attained at time $(t)\n")
         s.runtimeData.maxTech = newMax
         push!(s.runtimeData.frontierVec, t)
     end
@@ -247,7 +247,7 @@ function redrawBonds!(s::ModelState, mobList::Array)
             unconnected = setdiff(unconnected, [nodeIndex])
             newNeighbor = rand(unconnected)
             add_edge!(newGraph, nodeIndex, newNeighbor) # Add the new edge on the new graph.
-            println("Replaced edge $(neighborIndex) with edge $(newNeighbor) for $(nodeIndex)")
+            # println("Replaced edge $(neighborIndex) with edge $(newNeighbor) for $(nodeIndex)")
             s.nodeList[nodeIndex].mobilityFlag = true; # Update mobility flag.
         end
     end
@@ -259,8 +259,8 @@ end
 function updateMobile!(s::ModelState)
     mobilities = [n.m for n in s.nodeList]
     mobileAgents = find(mobilities)
-    println("Mobile agents:")
-    println(mobileAgents)
+    # println("Mobile agents:")
+    # println(mobileAgents)
     redrawBonds!(s, mobileAgents)
 end
 
@@ -300,6 +300,7 @@ end
 function runModel(m::Model)
     state = initialize(m)
     for t in 1:m.T # So initialization is at time 0.
+        print_with_color(32, "Run $(t) of $(m.N)")
         update!(state, t)
     end
     return state
