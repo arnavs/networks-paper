@@ -1,14 +1,14 @@
 #=
 Implements the model described in Fogli and Veldkamp, "Germs, Social Networks, and Growth."
 @author: Arnav Sood
-@date: 2017-09-21
+@date: 2017-09-27
 =#
 
 # Name module.
 module networksFV
 
 # Export types.
-export Node, Model, DataHolder, ModelState
+export Node, Model, DataHolder, ModelState, NodeDist
 
 # Export functions.
 export τ, isSick, Node, ourMod, runModel, update!, initialize, nodes
@@ -18,6 +18,7 @@ using Distributions
 using LightGraphs
 const Probability = Real
 const nodes = vertices
+import Base.rand
 
 # Define the objects used in the model.
 type Node
@@ -39,7 +40,7 @@ type Model
     A₀::Real # Initial technology level.
     π::Probability # Disease transmission probability.
     ϕ::Probability # Technology transmission probability.
-    α::Distribution # Distribution for initial node states.
+    α::Distribution # Distribution of initial node types.
     Δ::Integer # Spacing for individualist nodes.
     Λ::Real # Feedback 1 parameter.
     Π::Real # Feedback 2 parameter.
@@ -49,6 +50,18 @@ type DataHolder
     typeChanges::Integer
     maxTech::Real
     frontierVec::Array
+end
+
+# Create α.
+type NodeDist <: Distribution{Multivariate, Discrete}
+    θ::Distribution
+    nf
+    m
+end
+
+function rand(α::NodeDist, n::Int64=1)
+    rtn = [rand(α.θ), rand(α.nf), rand(α.m)]
+    return rtn
 end
 
 type ModelState
@@ -72,9 +85,7 @@ function Node(θ, nf, m)
 end
 
 function fillNode(m::Model)
-    # τ = rand(m.α)
-    # FOR TESTING.
-    τ = [rand([true, false]), 2, rand([0.2, 0])]
+    τ = rand(m.α) # Draw a node type.
     return Node(τ..., m.A₀, false) # ... unpacks f([x,y,z],γ) into f(x,y,z,γ).
 end
 
