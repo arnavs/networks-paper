@@ -5,8 +5,8 @@ Implements the model described in Fogli and Veldkamp, "Germs, Social Networks, a
 =#
 
 
-include("networksFV.jl")
-using networksFV, LightGraphs
+include("networksBackend.jl")
+using networksBackend, LightGraphs
 
 function avgTechGrowth!(s::ModelState) # Log diffs last period's max tech to A₀.
     T = s.m.T
@@ -26,7 +26,7 @@ end
 function avgPathLength!(s::ModelState)
     g = deepcopy(s.g) # Create a new copy of the state graph.
     g = Graph(g) # Convert to undirected to count paths.
-    distances = floyd_warshall_shortest_paths(g) # Use the given algorithm to compute the distance matrix.
+    distances = floyd_warshall_shortest_paths(g).dists # Use the given algorithm to compute the distance matrix.
     avgPathLength = mean(distances) # Average over all pairs, including (i, i). Returns something like Matlab's Inf when any i, j have no path between them.
     return avgPathLength
 end
@@ -53,5 +53,5 @@ function report(s::ModelState)
     avgLag = avgLag!(s)
     # halfDiffusion = halfDiffusion!(s)
 
-    return avgTech, fracDisease, avgPathLength, typeChangeProb, avgLag
+    return avgTechGrowth, fracDisease, avgPathLength, typeChangeProb, avgLag
 end

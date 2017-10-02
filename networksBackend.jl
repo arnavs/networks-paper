@@ -8,7 +8,7 @@ Implements the model described in Fogli and Veldkamp, "Germs, Social Networks, a
 module networksBackend
 
 # Export types.
-export Node, Model, DataHolder, ModelState, NodeDist
+export Node, Model, ModelState, DataHolder, ModelState, NodeDist
 
 # Export functions.
 export τ, isSick, Node, ourMod, runModel, update!, initialize, nodes

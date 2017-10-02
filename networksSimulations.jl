@@ -7,12 +7,12 @@ Runs the necessary simulations.
 =#
 
 # Import parameters.
-include("networksFV.jl")
+include("networksBackend.jl")
 include("networksReporting.jl")
-using Distributions, networksFV, LightGraphs, Gadfly, GraphPlot
+using Distributions, networksBackend, LightGraphs, Gadfly, GraphPlot
 
 # Set parameters and create holder objects.
-ξ = Bernoulli(0.2) # Guess based on paper. .
+ξ = Bernoulli(0.2)
 T = 500 # Paper page 21.
 N = 400 # Paper page 22.
 F1 = true
@@ -37,7 +37,7 @@ m = Model(ξ, T, N, F1, F2, λ, δ, A₀, π, ϕ, α, Δ, Λ, Π)
 
 # Run model 100 times, storing output in memory.
 results = Array{ModelState}(100)
-@time map!(entry -> runModel(m), results) # Can parallelize this eventually.
+@time map!(entry -> runModel(m), results, results) # Can parallelize this eventually.
 
 # Inspect an arbitrary element.
 element = results[50]
@@ -49,4 +49,4 @@ gplot(g, layout=circular_layout)
 
 # Run our specialized reporting functions.
 rep = report(element)
-print(report)
+print(rep)

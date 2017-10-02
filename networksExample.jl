@@ -8,8 +8,8 @@ Provides an example of how to use the backend.
 
 
 # Import dependencies.
-include("networksFV.jl")
-using networksFV
+include("networksBackend.jl")
+using networksBackend
 using Distributions
 using LightGraphs
 using GraphPlot, Gadfly
