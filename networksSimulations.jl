@@ -29,7 +29,7 @@ m = [0, 0.2]
 Λ = 0.0008
 Π = 0.12
 
-# Bundle the three node distributions into one multivariate distribution.
+# Bundle the three node parameter distributions into one multivariate node type distribution.
 α = NodeDist(θ, nf, m)
 
 # Create model.
