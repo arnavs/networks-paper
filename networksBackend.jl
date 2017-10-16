@@ -47,21 +47,16 @@ type Model
 end
 
 type DataHolder
-    typeChanges::Integer
-    maxTech::Real
-    frontierVec::Array
+    typeChanges::Integer # Total number of type changes.
+    maxTech::Real # Tech of node with the highest tech.
+    frontierVec::Array # Vector of times when maxTech is pushed forward.
 end
 
 # Create α.
 type NodeDist <: Distribution{Multivariate, Discrete}
-    θ::Distribution
-    nf
-    m
-end
-
-function rand(α::NodeDist, n::Int64=1)
-    rtn = [rand(α.θ), rand(α.nf), rand(α.m)]
-    return rtn
+    θ::Distribution # Bernoulli type.
+    nf # Degree.
+    m # Mobility.
 end
 
 type ModelState
@@ -72,6 +67,11 @@ type ModelState
 end
 
 # Create accessors and constructors for these objects.
+function rand(α::NodeDist, n::Int64=1) # For τ = rand(m.α) in fillNode.
+    rtn = [rand(α.θ), rand(α.nf), rand(α.m)]
+    return rtn
+end
+
 function τ(n::Node)
     return [n.θ, n.nf, n.m]
 end
