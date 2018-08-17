@@ -12,6 +12,8 @@ For an example of the social graphs we're talking about, see:
 
 ![Alt text](output-CanonicalModel.png?raw=true "Canonical Model Output")
 
+The heavy rim captures the fact that most of our agents are closely connected to their neighbors. And the scattering of long-range ties comes from our "mobile agents," who are randomly chosen at birth and randomly paired.  
+
 Note: This paper might not be forthcoming anymore. The authors decided to stick with MATLAB, which means I didn't have much continuing involvement. If you're interested, you can reach out to Fogli or Veldkamp. 
 
 ## This Repo 
