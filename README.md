@@ -1,6 +1,7 @@
 # networks.jl
 
 Provides an API around the model described in Fogli and Veldkamp, "Germs, Social Networks, and Growth." (forthcoming).
+
 date: 2017-09-24
 
 ## The Model
