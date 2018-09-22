@@ -1,6 +1,6 @@
 # networks.jl
 
-Provides an API around the model described in Fogli and Veldkamp, "Germs, Social Networks, and Growth." (forthcoming).
+Provides an Julia v0.6 API around the model described in Fogli and Veldkamp, "Germs, Social Networks, and Growth."
 
 date: 2017-09-24
 
